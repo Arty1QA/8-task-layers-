@@ -1,36 +1,49 @@
 const Globals = require('../utilities/Globals');
-const { Given, When, Then, Before} = require('cucumber');
-var LoginComponent = require('../pageObjectModels/loginComponent.js');
-var SearchComponent = require('../pageObjectModels/searchComponent.js');
-
-
-// Chai
+const { Given, When, Then} = require('cucumber');
+const Login = require('../pageObjectModels/loginComponent.js');
+const Search = require('../pageObjectModels/searchComponent.js');
 const globals = new Globals();
 const expect = globals.expect;
 
-Before({timeout: 10*1000}, function(){
-    LoginComponent.get();
-    LoginComponent.setName('Admin');
-    LoginComponent.passwordInput('passsword');
-    LoginComponent.button();
-    //browser.ignoreSynchronization = false; 
-    return browser.sleep(3000);
-});    
+const login = new Login();
+const search = new Search();
 
-Given('user clicks on {string}', async function (string) {
-  await SearchComponent.clickSearchIcon(string);
+Given('login to Web Client', function (callback) {
+  login.get().then(callback);
 });
 
-When('user enter {string}', async function (string) {
-  await SearchComponent.setFileNumber('File_2');
-  return browser.sleep(3000);
-  });
+When('I enter user Name', function (callback) {
+  login.setName('Admin').then(callback);
+});
 
-When('user clicks {string}', async function (string) {
-    await SearchComponent.clickSearchButton(string);
-    return browser.sleep(3000);
-  });
+When('I enter password', function (callback) {
+  login.passwordInput('V3rt@f0r3').then(callback);
+});
 
-  Then('File is opened', async function () {
-    await expect(SearchComponent.verifyFileTreeName()).to.eventually.equal(true);
-  });
+When('I logged in', function (callback) {
+  login.buttonClick().then(callback);
+
+});
+
+Then('WC is opened', function () {
+  return expect(login.verifyUser()).to.eventually.equal('Admin');
+  
+});
+
+Given('user clicks on {string}', function (callback) {
+  search.clickSearchIcon().then(callback);
+
+});
+
+When('user enter {string}', function (callback) {
+  search.setFileNumber().then(callback);
+});
+
+When('user clicks {string}', function (callback) {
+  search.clickSearchButton().then(callback);
+});
+
+Then('File is opened', function () {
+  return expect(search.verifyFileTreeName()).to.eventually.equal(true);
+  
+});
