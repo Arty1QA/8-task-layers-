@@ -1,23 +1,30 @@
-var SearchComponent = function () {
-    var searchIcon = element(by.className('fa fa-lg fa-search'));
-    var fileNumberTextbox = element(by.id('fileNumber'));
-    var searchButton = element(by.id('irSearchButton'));
-    var fileTreeName = element(by.className('tree-file-name ng-binding'));
+'use strict';
 
-    this.clickSearchIcon = function () {
-        return searchIcon.click();
+class Search {
+    clickSearchIcon() {
+        return element(by.className('fa fa-lg fa-search')).click();
     };
-    this.setFileNumber = function (number) {
-        return fileNumberTextbox.sendKeys(number);
-    };
-    this.clickSearchButton = function () {
-        return searchButton.click();
-    };  
-    this.verifyFileTreeName = function(){
-        return fileTreeName.isDisplayed();
-        };
-
+    
+    setFileNumber(number) {
       
+        return browser.wait(ExpectedConditions.visibilityOf(element(by.id('fileNumber'))), 3000, 'error message').then (function () {
+      return element(by.id('fileNumber')).sendKeys(number);
+    })
+    };
+
+    clickSearchButton() {
+        //return element(by.id('irSearchButton')).click();
+        return browser.wait(ExpectedConditions.visibilityOf(element(by.id('irSearchButton'))), 3000, 'error message').then (function () {
+            return element(by.id('irSearchButton')).click();
+    })
+    };
+
+    verifyFileTreeName () {
+        //return element(by.className('tree-file-name ng-binding')).isDisplayed();
+        return browser.wait(ExpectedConditions.visibilityOf(element(by.className('tree-file-name ng-binding'))), 3000, 'error message').then (function () {
+            return element(by.className('tree-file-name ng-binding')).isDisplayed();
+        })
+};
 };
 
-module.exports = new SearchComponent();
+module.exports = Search;
