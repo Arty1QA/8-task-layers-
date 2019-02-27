@@ -1,26 +1,32 @@
-var LoginComponent = function () {
-    var nameImput = element(by.name('UserName'));
-    var passwordInput = element(by.name('Password'));
-    var buttonClick = element(by.className('loginBtn'));
-    
-    this.get = function () {
-        browser.ignoreSynchronization = true; 
-        return browser.get('https://testenv/');  //
-      
-    };
-    
-    this.setName = function(user){
-        return nameImput.sendKeys(user);
-    };
-    
-    this.passwordInput = function(password){
-    return passwordInput.sendKeys(password);
-    };
-    
-    this.button = function(){
-    return buttonClick.click();
+'use strict';
 
+class Login {
+    get() {
+        browser.ignoreSynchronization = true; 
+        return browser.get('https://testenv/') 
+    }
+
+    setName(user) {
+        return element(by.name('UserName')).sendKeys(user)
+    }
+
+    passwordInput(password){
+        return element(by.name('Password')).sendKeys(password)
+        
     };
-    };
-    
-    module.exports = new LoginComponent();
+
+    buttonClick(){
+        return element(by.className('loginBtn')).click().then(function() {
+            return browser.ignoreSynchronization = false; 
+        })
+    }
+
+    verifyUser(){
+        return element(by.xpath('//*[@id="ir-user-config-button"]/span')).getText();
+    }
+}
+
+module.exports = Login;
+
+
+
