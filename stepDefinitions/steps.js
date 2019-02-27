@@ -17,7 +17,7 @@ When('I enter user Name', function (callback) {
 });
 
 When('I enter password', function (callback) {
-  login.passwordInput('V3rt@f0r3').then(callback);
+  login.passwordInput('xxxxxx').then(callback);
 });
 
 When('I logged in', function (callback) {
