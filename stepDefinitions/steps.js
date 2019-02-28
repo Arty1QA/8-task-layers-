@@ -4,7 +4,6 @@ const Login = require('../pageObjectModels/loginComponent.js');
 const Search = require('../pageObjectModels/searchComponent.js');
 const globals = new Globals();
 const expect = globals.expect;
-
 const login = new Login();
 const search = new Search();
 
@@ -17,7 +16,7 @@ When('I enter user Name', function (callback) {
 });
 
 When('I enter password', function (callback) {
-  login.passwordInput('xxxxxx').then(callback);
+  login.passwordInput('xxxxx').then(callback);
 });
 
 When('I logged in', function (callback) {
@@ -30,16 +29,17 @@ Then('WC is opened', function () {
   
 });
 
-Given('user clicks on {string}', function (callback) {
+Given('user clicks on Search Icon', function (callback) {
   search.clickSearchIcon().then(callback);
 
 });
 
-When('user enter {string}', function (callback) {
-  search.setFileNumber().then(callback);
+When('user enter File Name', function (callback) {
+  search.setFileNumber('File_2').then(callback);
+ 
 });
 
-When('user clicks {string}', function (callback) {
+When('user clicks Search Button', function (callback) {
   search.clickSearchButton().then(callback);
 });
 
