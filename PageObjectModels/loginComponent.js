@@ -3,7 +3,7 @@
 class Login {
     get() {
         browser.ignoreSynchronization = true; 
-        return browser.get('https://testenv/') 
+        return browser.get('https:testenv') 
     }
 
     setName(user) {
@@ -27,6 +27,7 @@ class Login {
 }
 
 module.exports = Login;
+
 
 
 
